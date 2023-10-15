@@ -29,7 +29,7 @@ const Form = ({ onSubmit }: Props) => {
       <div className="flex flex-col w-full">
         <input
           {...register("title")}
-          className=" text-sm rounded p-4 pl-5 h-10 w-full my-3"
+          className="text-sm rounded p-4 pl-5 h-10 w-full my-3"
           placeholder="Create a new todo..."
         />
         {errors.title && <p>{errors.title.message}</p>}
