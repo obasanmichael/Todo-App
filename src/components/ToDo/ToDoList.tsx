@@ -1,5 +1,4 @@
 import ClearIcon from "@mui/icons-material/Clear";
-import Checkboxsvg from "/images/icon-check.svg";
 
 export interface Item {
   id: number;
