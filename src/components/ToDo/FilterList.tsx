@@ -8,9 +8,9 @@ const FilterList = ({ onSelectCategory }: Props) => {
   }
   return (
     <div className="flex text-sm justify-between items-center rounded px-[50px] text-gray-500 py-6 bg-white h-[10px] m-5">
-      <p onClick={()=> handleCategoryClick('all')}>All</p>
-      <p onClick={()=> handleCategoryClick('active')}>Active</p>
-      <p onClick={()=> handleCategoryClick('completed')}>Completed</p>
+      <p className="hover:text-textGray" onClick={()=> handleCategoryClick('all')}>All</p>
+      <p className="hover:text-textGray" onClick={()=> handleCategoryClick('active')}>Active</p>
+      <p className="hover:text-textGray" onClick={()=> handleCategoryClick('completed')}>Completed</p>
     </div>
   );
 }

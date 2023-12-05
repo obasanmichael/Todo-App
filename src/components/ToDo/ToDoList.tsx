@@ -1,4 +1,7 @@
-import ClearIcon from "@mui/icons-material/Clear";
+import clearIcon from "./assets/Combined Shape 2.svg";
+import checkBox from "./assets/checkbox.png";
+import checkedImg from "./assets/CheckedImg.png";
+import { useState, useEffect } from "react";
 
 export interface Item {
   id: number;
@@ -9,38 +12,60 @@ export interface Item {
 interface Props {
   items: Item[];
   onDelete: (id: number) => void;
-  onToggle: (id: number) => void;
 }
 
-const ToDoList = ({ items, onDelete, onToggle }: Props) => {
+const ToDoList = ({ items, onDelete }: Props) => {
+  const [checkedStates, setCheckedStates] = useState(items.map(() => false));
+
+  useEffect(() => {
+    setCheckedStates(items.map(() => false));
+  }, [items]);
+
+  const handleButtonClick = (index: number) => {
+    setCheckedStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index] = !newStates[index];
+      return newStates;
+    });
+  };
+
+  const filteredItems = items.filter((_, index) => !checkedStates[index]);
+
   if (items.length === 0) return null;
+
   return (
-    <div className="m-3 flex flex-col border rounded-md  justify-center bg-white">
-      <ul className="divide-y divide-neutral-200  ">
+    <div className="m-3 flex flex-col border rounded-md justify-center bg-white">
+      <ul className="divide-y divide-neutral-200">
         {items.map((item, index) => (
-          <div className="flex justify-between pr-3" key={index}>
-            <li className="p-4 text-sm text-gray-500">
-              <input
-                name=""
-                id=""
-                checked={item.completed}
-                onChange={() => onToggle(item.id)}
-                type="checkbox"
-                className="mr-5 rounded-full text-gray-200"
-              />
+          <li
+            className={`flex items-center justify-between p-4 text-md ${
+              checkedStates[index]
+                ? "line-through text-gray-400"
+                : "text-textGray"
+            }`}
+            key={index}
+          >
+            <div className="flex items-center">
+              <button onClick={() => handleButtonClick(index)} className="pr-4">
+                <img
+                  src={checkedStates[index] ? checkedImg : checkBox}
+                  className="h-6 w-6"
+                  alt=""
+                />
+              </button>
               {item.title}
-            </li>
+            </div>
             <button onClick={() => onDelete(item.id)}>
-              <ClearIcon style={{ color: "#d1d5db" }} />
+              <img src={clearIcon} alt="" />
             </button>
-          </div>
+          </li>
         ))}
       </ul>
       <ul className="">
         <li className="flex justify-between p-4 text-xs text-gray-400 border">
-          {items.length === 1
-            ? items.length + " item left"
-            : items.length + " items left"}
+          {filteredItems.length === 1 || filteredItems.length === 0
+            ? filteredItems.length + " item left"
+            : filteredItems.length + " items left"}
           <p>Clear completed</p>
         </li>
       </ul>
